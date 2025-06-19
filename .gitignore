@@ -1,0 +1,39 @@
+# Ignore node_modules in any folder
+**/node_modules/
+
+# Ignore environment variable files
+.env
+**/.env
+
+# Ignore log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore OS/system files
+.DS_Store
+Thumbs.db
+
+# Ignore build folders
+/build
+/dist
+
+# Ignore package-lock/yarn-lock (if needed)
+package-lock.json
+yarn.lock
+
+# Ignore IDE-specific files (optional)
+.vscode/
+.idea/
+
+# Ignore coverage files from testing
+coverage/
+
+# Ignore uploads or temp files (if applicable)
+tmp/
+uploads/
+
+# Optional: ignore frontend build if you're building separately
+frontend/build/
+backend/build/
