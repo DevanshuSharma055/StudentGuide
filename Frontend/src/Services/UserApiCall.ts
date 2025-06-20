@@ -39,3 +39,7 @@ export const verifyEmail = (reqData: any) => {
 export const googleAuth = (token: any) =>{
   return axiosInstance.post('/user/GoogleLogin',{ token: token }).then((res: any) => res);
 }
+
+export const getReport = (text: string) =>{
+  return axiosInstance.post('/user/GetReport',{text:text}).then((res:any) => res);
+}

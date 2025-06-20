@@ -6,6 +6,7 @@ import SignupScreen from "../Screens/LoginSignup/SignupScreen";
 import ProtectedLayout from "../Layout/ProtectedLayout";
 import ForgetPassword from "../Screens/LoginSignup/ForgetPassword";
 import AboutPage from "../Screens/AboutSection/AboutPage";
+import QuestionChat from "../Screens/HomeSection/QuestionChat";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: "about", element: <AboutPage /> },
-
+      { path: "question", element: <QuestionChat /> },
     ],
   },
 ]);
