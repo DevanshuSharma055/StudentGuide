@@ -47,7 +47,7 @@ const LandingPage: React.FC = () => {
   return (
     <Box
       sx={{
-       background: 'linear-gradient(135deg,rgb(15, 15, 15) 0%,rgb(90, 72, 72) 100%)',
+       background: 'linear-gradient(135deg,rgb(245, 237, 237) 0%,rgb(141, 135, 135) 100%)',
       }}
     >
       {/* Hero Section */}
@@ -58,7 +58,7 @@ const LandingPage: React.FC = () => {
             component="h1"
             gutterBottom
             sx={{
-              fontWeight: "bold",
+              fontWeight: "bold", 
               color: "white",
               mb: 3,
               textShadow: "0 2px 4px rgba(0,0,0,0.3)",
@@ -88,15 +88,15 @@ const LandingPage: React.FC = () => {
           >
             <Chip
               label="Personalized"
-              sx={{ bgcolor: "rgba(255,255,255,0.2)", color: "white" }}
+              sx={{ bgcolor: "rgba(15, 14, 14, 0.2)", color: "white" }}
             />
             <Chip
               label="Data-Driven"
-              sx={{ bgcolor: "rgba(255,255,255,0.2)", color: "white" }}
+              sx={{ bgcolor: "rgba(15, 14, 14, 0.2)", color: "white" }}
             />
             <Chip
               label="Expert Insights"
-              sx={{ bgcolor: "rgba(255,255,255,0.2)", color: "white" }}
+              sx={{ bgcolor: "rgba(15, 14, 14, 0.2)", color: "white" }}
             />
           </Stack>
         </Box>
@@ -112,7 +112,7 @@ const LandingPage: React.FC = () => {
             backdropFilter: "blur(10px)",
           }}
         >
-          <Grid container spacing={4} alignItems="center">
+          <Grid  spacing={4} alignItems="center">
             <Grid>
               <Typography
                 variant="h4"
@@ -224,7 +224,7 @@ const LandingPage: React.FC = () => {
         </Grid>
       </Container>
 
-      {/* Bottom CTA Section */}
+      {/* Bottom CTA Section
       <Container maxWidth="md" sx={{ pb: 8 }}>
         <Paper
           sx={{
@@ -273,7 +273,7 @@ const LandingPage: React.FC = () => {
             Start Your Journey
           </Button>
         </Paper>
-      </Container>
+      </Container> */}
     </Box>
   );
 };

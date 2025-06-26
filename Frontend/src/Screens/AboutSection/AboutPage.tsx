@@ -14,6 +14,8 @@ import {
   LinkedIn,
   GitHub,
   Twitter,
+  X,
+  Mail,
 } from "@mui/icons-material";
 
 const AboutPage = () => {
@@ -66,17 +68,17 @@ const AboutPage = () => {
         Connect With Us
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center", gap: 3 }}>
-        <IconButton href="https://facebook.com" target="_blank" color="primary">
-          <Facebook fontSize="large" />
+        <IconButton href="https://x.com/SharmaJi_KaGyan" target="_blank" sx={{ color: "#E1306C" }}>
+          <X fontSize="large" />
         </IconButton>
-        <IconButton href="https://instagram.com" target="_blank" sx={{ color: "#E1306C" }}>
-          <Instagram fontSize="large" />
-        </IconButton>
-        <IconButton href="https://linkedin.com" target="_blank" sx={{ color: "#0072b1" }}>
+        <IconButton href="https://www.linkedin.com/in/devanshusharma-" target="_blank" sx={{ color: "#0072b1" }}>
           <LinkedIn fontSize="large" />
         </IconButton>
-        <IconButton href="https://github.com" target="_blank" sx={{ color: "black" }}>
+        <IconButton href="https://github.com/DevanshuSharma055" target="_blank" sx={{ color: "black" }}>
           <GitHub fontSize="large" />
+        </IconButton>
+        <IconButton href="devanshusharma022@gmail.com" target="_blank" sx={{ color: "black" }}>
+          <Mail fontSize="large"/>
         </IconButton>
       </Box>
 

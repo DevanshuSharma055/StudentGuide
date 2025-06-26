@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Container,
   Paper,
@@ -36,81 +36,109 @@ interface CareerRecommendationsProps {
 }
 
 const CareerRecommendations: React.FC<CareerRecommendationsProps> = ({ backendData }) => {
-  // Parse the backend text data into structured format
+  // Memoize the parsing to prevent unnecessary re-renders
+  const careers = useMemo(() => {
   const parseCareerData = (text: string): Career[] => {
-    const careers: Career[] = [];
-    const sections = text.split(/\*\*\d+\.\s+/).filter(section => section.trim());
-    
-    sections.forEach(section => {
-      if (!section.trim()) return;
-      
-      const lines = section.split('\n').filter(line => line.trim());
-      let career: Partial<Career> = {};
-      
-      // Extract career name from the first line
-      const firstLine = lines[0];
-      if (firstLine && firstLine.includes('**')) {
-        career.name = firstLine.replace(/\*\*/g, '').trim();
-      }
-      
-      // Parse each field
-      lines.forEach(line => {
-        const trimmedLine = line.trim();
-        if (trimmedLine.startsWith('* **Field Name:**')) {
-          // Already have name, skip
-        } else if (trimmedLine.startsWith('* **Short Description:**')) {
-          career.description = trimmedLine.replace('* **Short Description:**', '').trim();
-        } else if (trimmedLine.startsWith('* **Entrance Exams:**')) {
-          career.exams = trimmedLine.replace('* **Entrance Exams:**', '').trim();
-        } else if (trimmedLine.startsWith('* **Estimated Cost:**')) {
-          career.cost = trimmedLine.replace('* **Estimated Cost:**', '').trim();
-        } else if (trimmedLine.startsWith('* **Career Growth Potential:**')) {
-          career.growth = trimmedLine.replace('* **Career Growth Potential:**', '').trim();
-        } else if (trimmedLine.startsWith('* **Work Nature:**')) {
-          career.workNature = trimmedLine.replace('* **Work Nature:**', '').trim();
-        } else if (trimmedLine.startsWith('* **Why it Fits:**')) {
-          career.whyFits = trimmedLine.replace('* **Why it Fits:**', '').trim();
+    try {
+      const careers: Career[] = [];
+
+      // Split based on headings like **1. Career Name**
+      const sections = text.split(/\*\*\d+\.\s+/).filter(section => section.trim());
+      console.log('Parsed Sections:', sections);
+      sections.shift();
+      sections.forEach((section) => {
+        const lines = section.split('\n').filter(line => line.trim());
+        let career: Partial<Career> = {};
+
+        // First line is always the career name
+        const nameLine = lines[0]?.trim().replace(/\*\*/g, '') || '';
+        career.name = nameLine;
+
+        // Now parse all other fields
+        lines.forEach(line => {
+          const trimmedLine = line.trim();
+
+          if (trimmedLine.includes('**Brief Description:**')) {
+            career.description = trimmedLine.split('**Brief Description:**')[1]?.replace(/\*\*/g, '').trim();
+          } else if (trimmedLine.includes('**Why it fits Dev:**')) {
+            career.whyFits = trimmedLine.split('**Why it fits Dev:**')[1]?.replace(/\*\*/g, '').trim();
+          } else if (trimmedLine.includes('**Required Education/Exams:**')) {
+            career.exams = trimmedLine.split('**Required Education/Exams:**')[1]?.replace(/\*\*/g, '').trim();
+          } else if (trimmedLine.includes('**Estimated Cost:**')) {
+            career.cost = trimmedLine.split('**Estimated Cost:**')[1]?.replace(/\*\*/g, '').trim();
+          } else if (trimmedLine.includes('**Work Nature:**')) {
+            career.workNature = trimmedLine.split('**Work Nature:**')[1]?.replace(/\*\*/g, '').trim();
+          } else if (trimmedLine.includes('**Career Growth Potential:**')) {
+            career.growth = trimmedLine.split('**Career Growth Potential:**')[1]?.replace(/\*\*/g, '').trim();
+          }
+        });
+
+        if (career.name) {
+          careers.push({
+            name: career.name,
+            description: career.description || 'No description available',
+            exams: career.exams || 'None specified',
+            cost: career.cost || 'Not specified',
+            growth: career.growth || 'Not specified',
+            workNature: career.workNature || 'Not specified',
+            whyFits: career.whyFits || 'This career matches your profile based on the analysis.'
+          });
         }
       });
-      
-      // Only add if we have essential fields
-      if (career.name && career.description) {
-        careers.push({
-          name: career.name,
-          description: career.description || '',
-          exams: career.exams || 'None specified',
-          cost: career.cost || 'Not specified',
-          growth: career.growth || 'Not specified',
-          workNature: career.workNature || 'Not specified',
-          whyFits: career.whyFits || ''
-        });
-      }
-    });
-    
-    return careers;
+
+      console.log('Parsed Careers:', careers);
+      return careers;
+    } catch (error) {
+      console.error('Error parsing career data:', error);
+      return [];
+    }
   };
 
-  const careers = parseCareerData(backendData);
+  return parseCareerData(backendData);
+}, [backendData]);
+
 
   const getCostColor = (cost: string): 'success' | 'warning' | 'error' => {
-    if (cost.toLowerCase().includes('low')) return 'success';
-    if (cost.toLowerCase().includes('moderate')) return 'warning';
+    const lowerCost = cost.toLowerCase();
+    if (lowerCost.includes('low')) return 'success';
+    if (lowerCost.includes('moderate') || lowerCost.includes('medium')) return 'warning';
     return 'error';
   };
 
   const getGrowthColor = (growth: string): 'success' | 'info' | 'warning' => {
-    if (growth.toLowerCase().includes('very high')) return 'success';
-    if (growth.toLowerCase().includes('high')) return 'info';
+    const lowerGrowth = growth.toLowerCase();
+    if (lowerGrowth.includes('very high') || lowerGrowth.includes('excellent')) return 'success';
+    if (lowerGrowth.includes('high') || lowerGrowth.includes('good')) return 'info';
     return 'warning';
   };
 
   const hasExamRequirement = (exams: string) => {
+    const lowerExams = exams.toLowerCase();
     return exams && 
-           exams.toLowerCase() !== 'none' &&
-           !exams.toLowerCase().includes('none (') && 
-           !exams.toLowerCase().includes('none specified') &&
-           exams.toLowerCase() !== 'not specified';
+           lowerExams !== 'none' &&
+           !lowerExams.includes('none (') && 
+           !lowerExams.includes('none specified') &&
+           lowerExams !== 'not specified' &&
+           !lowerExams.includes('no specific');
   };
+
+  // Show loading state if no careers parsed
+  if (!careers || careers.length === 0) {
+    return (
+      <Container maxWidth="xl" sx={{ py: 4, bgcolor: 'grey.50', minHeight: '100vh' }}>
+        <Paper elevation={3} sx={{ p: 4, borderRadius: 3, textAlign: 'center' }}>
+          <Typography variant="h5" color="text.secondary">
+            {backendData ? 'Processing career recommendations...' : 'No career data available'}
+          </Typography>
+          {backendData && (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              Please check the data format or try again.
+            </Typography>
+          )}
+        </Paper>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="xl" sx={{ py: 4, bgcolor: 'grey.50', minHeight: '100vh' }}>
@@ -124,18 +152,17 @@ const CareerRecommendations: React.FC<CareerRecommendationsProps> = ({ backendDa
             Your Career Recommendations
           </Typography>
           <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
-            Based on your profile, here are personalized career paths that match your interests and constraints.
+            Based on your profile, here are {careers.length} personalized career paths that match your interests and constraints.
           </Typography>
         </Box>
 
-        {/* Career Cards Grid */}
+        {/* Career Cards Grid - Fixed Grid Structure */}
         <Grid spacing={3} sx={{ mb: 6 }}>
           {careers.map((career, index) => (
-            <Grid key={index}>
+            <Grid key={`career-${index}`}>
               <Card 
                 sx={{ 
                   height: '100%', 
-                  width: '100%',
                   display: 'flex', 
                   flexDirection: 'column',
                   transition: 'all 0.3s ease-in-out',
@@ -145,7 +172,7 @@ const CareerRecommendations: React.FC<CareerRecommendationsProps> = ({ backendDa
                   }
                 }}
               >
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                <CardContent sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column' }}>
                   {/* Career Title */}
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
                     <Avatar sx={{ bgcolor: 'primary.main', mr: 2, width: 40, height: 40 }}>
@@ -160,7 +187,7 @@ const CareerRecommendations: React.FC<CareerRecommendationsProps> = ({ backendDa
                   <Typography 
                     variant="body1" 
                     color="text.secondary" 
-                    sx={{ mb: 3, lineHeight: 1.7 }}
+                    sx={{ mb: 3, lineHeight: 1.7, flexGrow: 1 }}
                   >
                     {career.description}
                   </Typography>
@@ -229,7 +256,7 @@ const CareerRecommendations: React.FC<CareerRecommendationsProps> = ({ backendDa
                   {hasExamRequirement(career.exams) && (
                     <Box 
                       sx={{ 
-                        mt: 2, 
+                        mt: 'auto',
                         p: 2, 
                         bgcolor: 'grey.50', 
                         borderRadius: 2,
@@ -265,20 +292,20 @@ const CareerRecommendations: React.FC<CareerRecommendationsProps> = ({ backendDa
           <Typography variant="h5" gutterBottom sx={{ color: 'info.main', fontWeight: 'bold', mb: 3 }}>
             Important Considerations
           </Typography>
-          <Box sx={{ space: 2 }}>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 2, lineHeight: 1.6 }}>
+          <Box sx={{ '& > *': { mb: 2 } }}>
+            <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.6 }}>
               <Box component="span" sx={{ fontWeight: 'bold' }}>
                 • Competitive Exams:
               </Box>{' '}
               While not explicitly required for most of these, excelling in relevant certifications can significantly boost career prospects.
             </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 2, lineHeight: 1.6 }}>
+            <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.6 }}>
               <Box component="span" sx={{ fontWeight: 'bold' }}>
                 • Entrepreneurship:
               </Box>{' '}
               Many of these careers provide a stepping stone to entrepreneurship. Building experience and a strong network are crucial.
             </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+            <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.6, mb: 0 }}>
               <Box component="span" sx={{ fontWeight: 'bold' }}>
                 • Networking:
               </Box>{' '}

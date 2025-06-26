@@ -177,14 +177,14 @@ const Header = () => {
               horizontal: "right",
             }}
           >
-            <MenuItem onClick={handleProfile}>
+            {/* <MenuItem onClick={handleProfile}>
               {loading ? (
                 <Box sx={{ mt: 1 }}>
                   <CircularLoader />
                 </Box>
               ): 'Verify Email'}
               
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Grid>

@@ -23,6 +23,7 @@ import { getReport } from "../../Services/UserApiCall";
 import { toast } from "react-toastify";
 import CareerRecommendations from "./components/CareerRecommendations";
 import { CircularLoader } from "../../Components/Loader";
+import { Prompt } from "../../Utils/Prompt";
 
 // Type definitions
 type QuestionType = "text" | "paragraph" | "single-select" | "multi-select";
@@ -67,14 +68,12 @@ const QuestionChat: React.FC = () => {
     try {
       setLoading(true);
       const res = await getReport(text);
-      console.log(res);
       if (res.status == 200) {
         toast.success(res.message);
         console.log(res.data?.data);
         setUserReport(res.data?.data);
       }
     } catch (error: any) {
-      console.log(error);
       if (error.response) {
         const errorMessage =
           error.response.data?.message ||
@@ -116,52 +115,9 @@ const QuestionChat: React.FC = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
-            const searchText = `
-      The user is ${answers["1"]} years old, has completed ${
-              answers["6"]
-            } with a focus on ${answers["7"]}.
-      They are interested in ${
-              answers["9"]
-            }, and also enjoy extracurricular activities like ${(
-              answers["22"] as string[]
-            ).join(", ")}.
-
-      They prefer ${answers["12"]} work, are ${
-              answers["16"] === "Yes"
-                ? "comfortable"
-                : answers["16"] === "No"
-                ? "uncomfortable"
-                : "somewhat comfortable"
-            } with coding, and ${
-              answers["19"] === "Yes"
-                ? "are"
-                : answers["19"] === "No"
-                ? "are not"
-                : "might be"
-            } open to competitive exams.
-      Their family can afford ${answers["20"]} education costs.
-
-      Their goal is to ${answers["11"]}, and they prefer a career that is ${
-              answers["15"]
-            }.
-      They are ${answers["14"] === "Yes" ? "open" : "not open"} to relocation.
-      Suggest suitable future career options with:
-
-      Field name
-
-      Short description
-
-      Entrance exams (if any)
-
-      Estimated cost
-
-      Career growth potential
-
-      Work nature (desk/field/remote/creative)
-
-      Why it fits the user
-
-      // Give at least 7 to 10 suitable career options.`;
+      console.log('answere', answers,'answere')
+      const searchText = Prompt(answers);
+      console.log(searchText);
 //       const searchText = `The user is dev years old, has completed BTech with a focus on Computer scinecn.
 // They are interested in COmputer, and also enjoy extracurricular activities like Sports, Gaming (casual or competitive).
 
