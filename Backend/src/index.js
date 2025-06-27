@@ -10,7 +10,7 @@ const port = process.env.PORT || 5050;
 
 dbConnection()
   .then(() => {
-    app.listen(port, () => {
+    app.listen(port,'0.0.0.0', () => {
       console.log(`server starte at ${port}`);
     });
   })
