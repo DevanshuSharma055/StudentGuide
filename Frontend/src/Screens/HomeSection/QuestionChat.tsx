@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
 import CareerRecommendations from "./components/CareerRecommendations";
 import { CircularLoader } from "../../Components/Loader";
 import { Prompt } from "../../Utils/Prompt";
+import { color } from "../../Utils/UIConstant";
 
 // Type definitions
 type QuestionType = "text" | "paragraph" | "single-select" | "multi-select";
@@ -81,10 +82,9 @@ const QuestionChat: React.FC = () => {
           `Error: ${error.response.status}`;
         toast.error(errorMessage);
       }
-    } 
-      setLoading(false);
-      setIsCompleted(true);
-    
+    }
+    setLoading(false);
+    setIsCompleted(true);
   };
 
   const handleSubmitAnswer = (): void => {
@@ -115,34 +115,34 @@ const QuestionChat: React.FC = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
-      console.log('answere', answers,'answere')
+      console.log("answere", answers, "answere");
       const searchText = Prompt(answers);
       console.log(searchText);
-//       const searchText = `The user is dev years old, has completed BTech with a focus on Computer scinecn.
-// They are interested in COmputer, and also enjoy extracurricular activities like Sports, Gaming (casual or competitive).
+      //       const searchText = `The user is dev years old, has completed BTech with a focus on Computer scinecn.
+      // They are interested in COmputer, and also enjoy extracurricular activities like Sports, Gaming (casual or competitive).
 
-// They prefer Remote work work, are somewhat comfortable with coding, and might be open to competitive exams.
-// Their family can afford Moderate education costs.
+      // They prefer Remote work work, are somewhat comfortable with coding, and might be open to competitive exams.
+      // Their family can afford Moderate education costs.
 
-// Their goal is to Entrepreneurship, and they prefer a career that is Impactful/social work.
-// They are not open to relocation.
-// Suggest suitable future career options with:
+      // Their goal is to Entrepreneurship, and they prefer a career that is Impactful/social work.
+      // They are not open to relocation.
+      // Suggest suitable future career options with:
 
-// Field name
+      // Field name
 
-// Short description
+      // Short description
 
-// Entrance exams (if any)
+      // Entrance exams (if any)
 
-// Estimated cost
+      // Estimated cost
 
-// Career growth potential
+      // Career growth potential
 
-// Work nature (desk/field/remote/creative)
+      // Work nature (desk/field/remote/creative)
 
-// Why it fits the user
+      // Why it fits the user
 
-// Give at least 7 to 10 suitable career options.`;
+      // Give at least 7 to 10 suitable career options.`;
       getUserReport(searchText);
     }
   };
@@ -187,7 +187,15 @@ const QuestionChat: React.FC = () => {
     switch (question.type) {
       case "text":
         return (
-          <Box sx={{ display: "flex", gap: 1, alignItems: "flex-end", mt: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              alignItems: "flex-end",
+              mt: 2,
+              color: "white",
+            }}
+          >
             <TextField
               fullWidth
               variant="outlined"
@@ -199,11 +207,37 @@ const QuestionChat: React.FC = () => {
               }
               onKeyPress={handleKeyPress}
               autoFocus
+              sx={{
+                "& .MuiInputLabel-root": {
+                  color: "white",
+                },
+                "& .MuiOutlinedInput-root": {
+                  color: "white",
+                  "& fieldset": {
+                    borderColor: "white",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "white",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "white",
+                  },
+                },
+                input: {
+                  color: "white",
+                },
+              }}
             />
             <IconButton
-              color="primary"
+              color="secondary"
               onClick={handleSubmitAnswer}
               disabled={!currentAnswer.trim()}
+              sx={{
+                color: "white", 
+                "&:disabled": {
+                  color: "rgba(255, 255, 255, 0.3)", 
+                },
+              }}
             >
               <Send />
             </IconButton>
@@ -302,53 +336,6 @@ const QuestionChat: React.FC = () => {
     }
   };
 
-  //   if (isCompleted) {
-  //     return (
-  //       <Container maxWidth="md" sx={{ py: 4 }}>
-  //         <Paper elevation={3} sx={{ p: 4, textAlign: "center" }}>
-  //           <CheckCircle sx={{ fontSize: 64, color: "success.main", mb: 2 }} />
-  //           <Typography variant="h4" gutterBottom color="success.main">
-  //             Survey Completed!
-  //           </Typography>
-  //           <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-  //             Thank you for answering all the questions.
-  //           </Typography>
-
-  //           <Card sx={{ mt: 3, textAlign: "left" }}>
-  //             <CardContent>
-  //               <Typography variant="h6" gutterBottom>
-  //                 Your Responses:
-  //               </Typography>
-  //               {Object.entries(answers).map(([questionId, answer]) => {
-  //                 const question = questions.find(
-  //                   (q) => q.id === parseInt(questionId)
-  //                 );
-  //                 const serachtext = `The user is ${
-  //                   questionId == "1" ? answer : ""
-  //                 } years old, has completed [latest qualification] with a focus on [stream or subjects]. They are interested in [subjects], and also enjoy extracurricular activities like [list of hobbies, e.g., drawing, music, sports].
-
-  // They prefer [desk/field/creative] work, are [comfortable/uncomfortable] with coding, and [are/are not] open to competitive exams. Their family can afford [low/moderate/high] education costs.
-
-  // Their goal is to [goal: get a job, become an entrepreneur, study abroad, etc.], and they prefer a career that is [secure/high-paying/creative/social-impact]. They are [open/not open] to relocation.`;
-  //                 return (
-  //                   <Box
-  //                     key={questionId}
-  //                     sx={{ mb: 2, pb: 2, borderBottom: "1px solid #eee" }}
-  //                   >
-  //                     <Typography variant="subtitle2" color="text.secondary">
-  //                       {question?.question}
-  //                     </Typography>
-  //                     {renderAnswer(answer)}
-  //                   </Box>
-  //                 );
-  //               })}
-  //             </CardContent>
-  //           </Card>
-  //         </Paper>
-  //       </Container>
-  //     );
-  //   }
-
   if (isCompleted) {
     return !loading ? (
       <CareerRecommendations backendData={userReport} />
@@ -369,6 +356,7 @@ const QuestionChat: React.FC = () => {
           flexDirection: "column",
           maxHeight: "100%",
           overflow: "hidden",
+          backgroundColor: color.PrimaryBackgroud,
         }}
       >
         {/* Header */}
@@ -377,10 +365,14 @@ const QuestionChat: React.FC = () => {
             p: 2,
             borderBottom: "1px solid #e0e0e0",
             bgcolor: "primary.main",
-            color: "white",
+            color: color.PrimaryTextColor,
+            backgroundColor: color.PrimaryBackgroud,
           }}
         >
-          <Typography variant="h6">
+          <Typography
+            variant="h6"
+            sx={{ backgroundColor: color.PrimaryBackgroud }}
+          >
             Interactive Survey ({currentQuestionIndex + 1}/{questions.length})
           </Typography>
         </Box>
@@ -399,7 +391,7 @@ const QuestionChat: React.FC = () => {
                   <Avatar sx={{ bgcolor: "primary.main", mr: 1 }}>
                     <Computer />
                   </Avatar>
-                  <Paper sx={{ p: 2, bgcolor: "grey.100", maxWidth: "80%" }}>
+                  <Paper sx={{ p: 2, bgcolor: color.SecBackgroudColor, color:color.PrimaryTextColor , maxWidth: "80%" }}>
                     <Typography variant="body1">
                       {question?.question}
                     </Typography>
@@ -413,15 +405,15 @@ const QuestionChat: React.FC = () => {
                   <Paper
                     sx={{
                       p: 2,
-                      bgcolor: "primary.light",
                       color: "white",
                       maxWidth: "80%",
                       mr: 1,
+                      bgcolor: color.SecBackgroudColor 
                     }}
                   >
                     {renderAnswer(answer)}
                   </Paper>
-                  <Avatar sx={{ bgcolor: "secondary.main" }}>
+                  <Avatar sx={{ bgcolor: color.SecBackgroudColor }}>
                     <Person />
                   </Avatar>
                 </Box>
@@ -437,7 +429,14 @@ const QuestionChat: React.FC = () => {
                   <Avatar sx={{ bgcolor: "primary.main", mr: 1 }}>
                     <Computer />
                   </Avatar>
-                  <Paper sx={{ p: 2, bgcolor: "grey.100", maxWidth: "80%" }}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      maxWidth: "80%",
+                      backgroundColor: color.SecBackgroudColor,
+                      color: color.PrimaryTextColor,
+                    }}
+                  >
                     <Typography variant="body1">
                       {questions[currentQuestionIndex]?.question}
                     </Typography>

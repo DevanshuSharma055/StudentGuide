@@ -117,14 +117,15 @@ const Header = () => {
       justifyContent="space-between"
       sx={{
         padding: "10px 20px",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#1E1E2F ",
         boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+        color:'#FFFFFF'
       }}
     >
       {/* Left - Logo */}
       <Grid>
         <Typography variant="h6" fontWeight="bold">
-          Logo
+          Career
         </Typography>
       </Grid>
 
@@ -158,10 +159,10 @@ const Header = () => {
       {user && (
         <Grid>
           <Avatar
-            sx={{ bgcolor: "primary.main", cursor: "pointer" }}
+            sx={{ bgcolor: "#FFFFFF", cursor: "pointer" }}
             onClick={handleAvatarClick}
           >
-            <PersonIcon />
+            <PersonIcon style={{ color: 'black' }}/>
           </Avatar>
 
           <Menu

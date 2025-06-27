@@ -17,10 +17,11 @@ import {
   X,
   Mail,
 } from "@mui/icons-material";
+import { color } from "../../Utils/UIConstant";
 
 const AboutPage = () => {
   return (
-    <Box sx={{ p: 4, bgcolor: "#f5f5f5", minHeight: "100vh" }}>
+    <Box sx={{ p: 4, bgcolor: color.PrimaryBackgroud, minHeight: "100vh", color: color.PrimaryTextColor }}>
       {/* Header */}
       <Typography variant="h3" align="center" gutterBottom>
         About Us
@@ -31,16 +32,16 @@ const AboutPage = () => {
       </Typography>
 
       {/* Team Section */}
-      <Grid container spacing={4} justifyContent="center">
+      <Grid container spacing={4} justifyContent="center" >
         <Grid>
-          <Paper elevation={3} sx={{ p: 3, textAlign: "center", borderRadius: 4 }}>
+          <Paper elevation={3} sx={{ p: 3, textAlign: "center", borderRadius: 4, backgroundColor: color.SecBackgroudColor }}>
             <Avatar
               alt="John Doe"
               // src="https://i.pravatar.cc/300"
-              sx={{ width: 100, height: 100, mx: "auto", mb: 2 }}
+              sx={{ width: 100, height: 100, mx: "auto", mb: 2,color: color.SecBackgroudColor }}
             />
-            <Typography variant="h6">Devanshu Sharma</Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="h6" sx={{color: color.PrimaryTextColor}}>Devanshu Sharma</Typography>
+            <Typography variant="body2" sx={{color: color.PrimaryTextColor}}>
               Full Stack Developer
             </Typography>
             {/* <Box sx={{ mt: 1 }}>
@@ -81,11 +82,6 @@ const AboutPage = () => {
           <Mail fontSize="large"/>
         </IconButton>
       </Box>
-
-      {/* Footer Note */}
-      <Typography variant="body2" align="center" color="text.secondary" sx={{ mt: 6 }}>
-        © {new Date().getFullYear()} YourCompanyName. All rights reserved.
-      </Typography>
     </Box>
   );
 };

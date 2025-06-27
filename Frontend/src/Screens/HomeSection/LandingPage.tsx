@@ -7,7 +7,6 @@ import {
   Button,
   Card,
   CardContent,
-  Paper,
   Chip,
   Stack,
 } from "@mui/material";
@@ -19,202 +18,108 @@ import {
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { color } from "../../Utils/UIConstant";
 
 const LandingPage: React.FC = () => {
   const userData = useSelector((state: any) => state.user.userData);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const features = [
     {
-      icon: <Assessment sx={{ fontSize: 40, color: "#1976d2" }} />,
+      icon: <Assessment fontSize="large" sx={{ color: "#6366f1" }} />,
       title: "Detailed Analysis",
       description:
-        "Get comprehensive insights into your skills, interests, and career potential",
+        "Get insights into your skills, interests, and potential career paths.",
     },
     {
-      icon: <TrendingUp sx={{ fontSize: 40, color: "#1976d2" }} />,
+      icon: <TrendingUp fontSize="large" sx={{ color: "#06b6d4" }} />,
       title: "Growth Opportunities",
       description:
-        "Discover emerging career paths and future-ready skills in your field",
+        "Discover emerging careers and future-ready skills in your industry.",
     },
     {
-      icon: <WorkOutline sx={{ fontSize: 40, color: "#1976d2" }} />,
+      icon: <WorkOutline fontSize="large" sx={{ color: "#10b981" }} />,
       title: "Industry Insights",
       description:
-        "Access real-world data about job markets, salaries, and career progression",
+        "Explore job market trends, salary data, and career progression.",
     },
   ];
 
   return (
-    <Box
-      sx={{
-       background: 'linear-gradient(135deg,rgb(245, 237, 237) 0%,rgb(141, 135, 135) 100%)',
-      }}
-    >
-      {/* Hero Section */}
-      <Container maxWidth="lg" sx={{ pt: 8, pb: 6 }}>
-        <Box sx={{ textAlign: "center", mb: 8 }}>
-          <Typography
-            variant="h2"
-            component="h1"
-            gutterBottom
-            sx={{
-              fontWeight: "bold", 
-              color: "white",
-              mb: 3,
-              textShadow: "0 2px 4px rgba(0,0,0,0.3)",
-            }}
-          >
-            Welcome, {userData.name}! 🎯
+    <Box sx={{ backgroundColor: color.PrimaryBackgroud, color: "white", py: 8 }}>
+      <Container maxWidth="md">
+        {/* Hero Section */}
+        <Box textAlign="center" mb={6}>
+          <Typography variant="h3" fontWeight={700} gutterBottom>
+            Welcome, {userData.name}!
           </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              color: "rgba(255,255,255,0.9)",
-              mb: 4,
-              maxWidth: "800px",
-              mx: "auto",
-              lineHeight: 1.6,
-            }}
-          >
-            Unlock your career potential with our comprehensive guide. Get
-            personalized insights and actionable recommendations.
+          <Typography variant="h6" sx={{ color: "#d1d5db", mb: 3 }}>
+            Unlock your career potential with personalized insights and expert recommendations.
           </Typography>
 
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-            sx={{ mb: 4 }}
-          >
-            <Chip
-              label="Personalized"
-              sx={{ bgcolor: "rgba(15, 14, 14, 0.2)", color: "white" }}
-            />
-            <Chip
-              label="Data-Driven"
-              sx={{ bgcolor: "rgba(15, 14, 14, 0.2)", color: "white" }}
-            />
-            <Chip
-              label="Expert Insights"
-              sx={{ bgcolor: "rgba(15, 14, 14, 0.2)", color: "white" }}
-            />
+          <Stack direction="row" spacing={2} justifyContent="center" mb={4}>
+            <Chip label="Personalized" variant="outlined" sx={{ color: "white", borderColor: "#4b5563" }} />
+            <Chip label="Data-Driven" variant="outlined" sx={{ color: "white", borderColor: "#4b5563" }} />
+            <Chip label="Expert Insights" variant="outlined" sx={{ color: "white", borderColor: "#4b5563" }} />
           </Stack>
+
+          <Button
+            variant="contained"
+            sx={{
+              mt: 2,
+              px: 5,
+              py: 1.5,
+              fontSize: "1rem",
+              borderRadius: "8px",
+              backgroundColor: color.PrimaryBtnColor,
+              color: "black",
+              fontWeight: 600,
+              "&:hover": {
+                backgroundColor: color.PrimaryBtnHoverColor,
+              },
+            }}
+            onClick={() => navigate("/home/question")}
+          >
+            Get Started Now
+          </Button>
         </Box>
 
-        {/* Main CTA Card */}
-        <Paper
-          elevation={12}
-          sx={{
-            p: 6,
-            borderRadius: 4,
-            background: "linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)",
-            border: "1px solid rgba(255,255,255,0.8)",
-            backdropFilter: "blur(10px)",
-          }}
-        >
-          <Grid  spacing={4} alignItems="center">
-            <Grid>
-              <Typography
-                variant="h4"
-                gutterBottom
-                sx={{ fontWeight: "bold", color: "#1a202c" }}
-              >
-                Ready to Shape Your Future?
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{ color: "#4a5568", mb: 3, fontSize: "1.1rem" }}
-              >
-                Fill in your details and receive a comprehensive career guide
-                report tailored to your unique profile, skills, and aspirations.
-              </Typography>
-              <Box
-                sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}
-              >
-                <Person sx={{ color: "#1976d2" }} />
-                <Typography variant="body2" sx={{ color: "#6b7280" }}>
-                  Takes only 5-10 minutes to complete
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid sx={{ textAlign: "center" }}>
-              <Button
-                variant="contained"
-                size="large"
-                sx={{
-                  py: 2,
-                  px: 4,
-                  fontSize: "1.1rem",
-                  fontWeight: "bold",
-                  borderRadius: 3,
-                  background:
-                    "linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)",
-                  boxShadow: "0 4px 20px rgba(25, 118, 210, 0.3)",
-                  textTransform: "none",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 8px 25px rgba(25, 118, 210, 0.4)",
-                    background:
-                      "linear-gradient(45deg, #1565c0 30%, #1976d2 90%)",
-                  },
-                }}
-                onClick={()=>navigate('/home/question')}
-              >
-                Get Started Now
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Container>
+        {/* Quick Info */}
+        <Box display="flex" alignItems="center" justifyContent="center" mb={6}>
+          <Person fontSize="small" sx={{ mr: 1, color: "#9ca3af" }} />
+          <Typography variant="body2" color="#9ca3af">
+            Takes only 5–10 minutes to complete
+          </Typography>
+        </Box>
 
-      {/* Features Section */}
-      <Container maxWidth="lg" sx={{ pb: 8 }}>
-        <Typography
-          variant="h4"
-          align="center"
-          gutterBottom
-          sx={{
-            color: "white",
-            mb: 6,
-            fontWeight: "bold",
-            textShadow: "0 2px 4px rgba(0,0,0,0.3)",
-          }}
-        >
+        {/* Features */}
+        <Typography variant="h4" align="center" fontWeight={700} mb={4}>
           What You'll Get
         </Typography>
 
-        <Grid container spacing={4}>
+        <Grid spacing={4}>
           {features.map((feature, index) => (
-            <Grid key={index}>
+            <Grid key={index}  sx={{marginTop:'2px'}}>
               <Card
                 sx={{
                   height: "100%",
-                  background: "rgba(255,255,255,0.95)",
-                  backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(255,255,255,0.3)",
-                  borderRadius: 3,
-                  transition: "all 0.3s ease",
+                  color:'#ffffff ',
+                  borderRadius: 2,
+                  p: 2,
+                  transition: "0.3s",
                   "&:hover": {
-                    transform: "translateY(-8px)",
-                    boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
-                    background: "rgba(255,255,255,1)",
+                    transform: "translateY(-4px)",
+                    boxShadow: 3,
                   },
+                  backgroundColor:'#2C2C3E'
                 }}
               >
-                <CardContent sx={{ p: 4, textAlign: "center" }}>
-                  <Box sx={{ mb: 3 }}>{feature.icon}</Box>
-                  <Typography
-                    variant="h6"
-                    gutterBottom
-                    sx={{ fontWeight: "bold", color: "#1a202c" }}
-                  >
+                <CardContent sx={{ textAlign: "center" }}>
+                  <Box mb={2}>{feature.icon}</Box>
+                  <Typography variant="h6" fontWeight={600} gutterBottom>
                     {feature.title}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "#4a5568", lineHeight: 1.6 }}
-                  >
+                  <Typography variant="body2" color="#ffffff '">
                     {feature.description}
                   </Typography>
                 </CardContent>
@@ -223,57 +128,6 @@ const LandingPage: React.FC = () => {
           ))}
         </Grid>
       </Container>
-
-      {/* Bottom CTA Section
-      <Container maxWidth="md" sx={{ pb: 8 }}>
-        <Paper
-          sx={{
-            p: 6,
-            textAlign: "center",
-            borderRadius: 4,
-            background: "rgba(255,255,255,0.1)",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255,255,255,0.2)",
-          }}
-        >
-          <Typography
-            variant="h5"
-            gutterBottom
-            sx={{ color: "white", fontWeight: "bold" }}
-          >
-            Don't Wait - Your Dream Career Awaits
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ color: "rgba(255,255,255,0.9)", mb: 4 }}
-          >
-            Join thousands who have already discovered their ideal career path
-          </Typography>
-          <Button
-            variant="outlined"
-            size="large"
-            sx={{
-              py: 2,
-              px: 4,
-              fontSize: "1.1rem",
-              fontWeight: "bold",
-              borderRadius: 3,
-              borderColor: "white",
-              color: "white",
-              textTransform: "none",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                backgroundColor: "white",
-                color: "#1976d2",
-                transform: "translateY(-2px)",
-                boxShadow: "0 8px 25px rgba(255,255,255,0.3)",
-              },
-            }}
-          >
-            Start Your Journey
-          </Button>
-        </Paper>
-      </Container> */}
     </Box>
   );
 };

@@ -6,11 +6,11 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        bgcolor: '#1976d2',
+        bgcolor: '#2C2C3E',
         color: 'white',
         py: 2,
         textAlign: 'center',
-        mt: 4,
+        
       }}
     >
       <Typography variant="body2">
