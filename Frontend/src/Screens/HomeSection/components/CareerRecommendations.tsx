@@ -148,7 +148,7 @@ const CareerRecommendations: React.FC<CareerRecommendationsProps> = ({ backendDa
           <Avatar sx={{ width: 80, height: 80, bgcolor: 'success.main', mx: 'auto', mb: 3 }}>
             <CheckCircle sx={{ fontSize: 48 }} />
           </Avatar>
-          <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold', color: 'success.main', mb: 2 }}>
+          <Typography variant="h4" component="h4" sx={{ fontWeight: 'bold', color: 'success.main', mb: 2 }}>
             Your Career Recommendations
           </Typography>
           <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
